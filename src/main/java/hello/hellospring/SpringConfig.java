@@ -17,22 +17,20 @@ import javax.xml.crypto.Data;
 
 @Configuration
 public class SpringConfig {
-    private DataSource dataSource;
-
-    public EntityManager em;
-
-    public SpringConfig(DataSource dataSource, EntityManager em){
-        this.dataSource = dataSource;
-        this.em = em;
+    private final MemberRepository memberRepository;
+    @Autowired
+    public SpringConfig(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
     }
+
     @Bean
     public MemberService memberService(){
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
     }
-    @Bean
-    public MemberRepository memberRepository(){
-        return new JdbcTemplateMemberRepository(dataSource);
-        // return new JdbcMemberRepository(dataSource);
-        //return new MemoryMemberRepository();
-    }
+//    @Bean
+//    public MemberRepository memberRepository(){
+//        return new JdbcTemplateMemberRepository(dataSource);
+//        // return new JdbcMemberRepository(dataSource);
+//        //return new MemoryMemberRepository();
+//    }
 }
